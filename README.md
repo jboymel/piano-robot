@@ -1,5 +1,5 @@
 # Robotic Piano Actuator System
-Northwestern University SURG 2026 — Jordan Boymel
+Northwestern University SURG 2026 — Jordan Boymel\
 Advisor: Dr. Brenna Argall
 
 ## Overview
@@ -12,8 +12,7 @@ keypresses, with architecture scalable to 88 keys.
 ## Research question
 How can a modular robotic actuation system be designed and controlled
 to achieve millisecond-scale timing precision and repeatable,
-force-controllable keypresses across multiple piano keys under realistic
-cost and power constraints?
+force-controllable keypresses across multiple piano keys?
 
 ## System overview
 - Actuators: 24V push solenoids (~25N), one per key
