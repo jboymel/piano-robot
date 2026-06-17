@@ -1,0 +1,9 @@
+*.asv
+*.m~
+*.ino.hex
+*.ino.elf
+build/
+.DS_Store
+.AppleDouble
+data/raw/
+~$*
