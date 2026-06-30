@@ -15,9 +15,9 @@ to achieve millisecond-scale timing precision and repeatable,
 force-controllable keypresses across multiple piano keys?
 
 ## System overview
-- Actuators: 24V push solenoids (~25N), one per key
+- Actuators: 24V push solenoids (JF-1039B), one per key
 - Controller: Arduino Mega 2560, C++ firmware
-- Drive circuit: IRLZ44N MOSFETs with FR307 flyback protection
+- Drive circuit: IRLB8721 MOSFETs with FR307 flyback protection
 - Sensing: FSR 402 (force) + TCST2103 photointerrupter (timing onset)
 - Frame: 80/20 1010 T-slot aluminum + 3D-printed PLA brackets
 - Power: 24V 1500W switching supply (62.5A)
