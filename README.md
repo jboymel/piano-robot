@@ -35,9 +35,9 @@ The Arduino connects to the whole 84-key array through five wires: 5 V, GND, DAT
 ## Hardware
 
 ### Octave driver board
-<!-- MEDIA: KiCad 3D render and/or photo of an assembled board
-![Octave driver board](media/octave-board.jpg)
--->
+
+![Octave driver board](media/3D_PCB_render.png)
+
 - **163.8 × 52.4 mm**, 2-layer. Four M3 mounting holes on a 155.8 × 44.4 mm pattern.
 - **Two 74HC595 shift registers** per board, in DIP sockets and cascaded (U1 QH′ → U2 SER). 12 of 16 outputs are used. SRCLR is tied high and OE is tied low.
 - **12 × IRLZ44N** logic-level MOSFETs (55 V V<sub>DS</sub>), low-side switching, TO-220 mounted vertically to save board depth.
