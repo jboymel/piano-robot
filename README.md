@@ -134,16 +134,16 @@ Peer review of the schematics caught wiring errors before fabrication, including
 
 ```
 firmware/
-  piano_driver/        Arduino Mega sketch (serial → shift-register chain)
-  bench_test/          Serial logger from the single-key bench prototype
-host/                  musescore_player.py (MIDI → serial frames)
+  piano_driver/        piano_driver.ino: Arduino Mega sketch (serial → shift-register chain)
+  bench_test/          serial_logger.py: logger from the single-key bench prototype
+host/                  midi_player.py: MIDI file → serial key-state frames
 hardware/
-  octave-board/        KiCad project, schematic PDF, Gerbers
-cad/                   Bracket (Onshape link + exported STL/STEP)
-matlab/analysis/       Trial analysis (onset time and force statistics)
-data/processed/        Characterization data
-docs/                  BOM, wiring, power debugging write-up
-media/                 Photos and video
+  pcb/                 KiCad project (solenoid-driver-v2) and fabrication Gerbers (.zip)
+cad/
+  stl/                 bracket.stl
+matlab/analysis/       analyze_trials.m: trial statistics (onset time, force)
+docs/                  BOM, wiring, schematic PDF, chain-failure write-up
+media/                 Photos, KiCad render, test videos
 ```
 
 > `matlab/analysis/analyze_trials.m` generates **placeholder data** if no real trial CSV is present. Any plots it produces without real data are not results.
