@@ -51,9 +51,8 @@ The Arduino connects to the whole 84-key array through five wires: 5 V, GND, DAT
 - **Striker:** an M4 × 0.7 coupling nut threads onto the plunger, with a 3/8″ felt pad on the contact face to protect the keys and soften the attack.
 
 ### Mounting bracket
-<!-- MEDIA: Onshape screenshot of the bracket, and a photo of it on the extrusion
-![Parametric bracket](media/bracket.png)
--->
+<img src="media/bracket.png" width="600" alt="Parametric bracket">
+
 - An asymmetric inverted-U saddle that straddles 80/20 T-slot extrusion. It is fully parametric in Onshape.
 - Key pitch was measured on a real piano and adjusted from 23.4 mm to about 23.5 mm. The standoff inset is a parameter, so the bracket stays compatible with the PCB hole pattern.
 
