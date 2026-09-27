@@ -1,50 +1,53 @@
-# Wiring documentation
+# Wiring
 
-## Single-channel bench test circuit
+This page covers the final 84-key system: seven identical octave boards, driven by an Arduino Mega. Part values and designators match the [BOM](bom.md).
 
-### Arduino Mega pin assignments
-- Pin 2: PWM output to 100 ohm gate resistor to MOSFET gate
-- Pin 18: photointerrupter onset interrupt (RISING)
-- Pin A0: FSR analog voltage input
-- 5V pin: sensor power rail
-- GND pin: common ground rail
+## Overview
 
-### Power rail (fully in series)
-PSU positive to inline 10A fuse to e-stop (NC) to +24V rail
-PSU negative to common GND rail
+The laptop connects to the Arduino over USB, which carries both serial data and 5 V power. The Arduino drives Board 1, and two separate chains run from each board to the next:
+- **Signal chain:** 5-conductor ribbon between the 1×5 headers (J13 in, J14 out).
+- **Power chain:** heavy wire between the 2-position power screw terminals (J15 in, J16 out). The 24 V supply connects to Board 1's J15.
 
-### MOSFET channel (IRLZ44N, flat face: G·D·S = left·middle·right)
-- Gate (left): 100 ohm from pin 2, 10k pull-down to GND, expose header pin for probe access
-- Drain (middle): solenoid bottom wire, FR307 diode anode
-- Source (right): GND rail
+## Arduino Mega → Board 1
 
-### Solenoid
-- Top wire: +24V rail
-- Bottom wire: MOSFET drain
+| Arduino pin | Signal | Notes |
+|---|---|---|
+| 51 (MOSI) | DATA | Hardware SPI |
+| 52 (SCK) | CLOCK | Hardware SPI |
+| 8 | LATCH | 74HC595 RCLK |
+| 5V | 5 V logic | Powers the shift registers on all 7 boards |
+| GND | GND | Common with the 24 V supply ground |
 
-### FR307 flyback diode
-- Cathode (stripe): +24V rail
-- Anode: MOSFET drain
-- Spans solenoid: cathode at top node, anode at bottom/drain node
+The 5 V logic rail for the entire chain comes from the laptop's USB through the Arduino. No separate 5 V supply is used.
 
-### FSR 402 voltage divider (5V circuit)
-5V to FSR to junction node to A0
-Junction node to 10k to GND
-Starting value 10k, calibrate with 4.7k/22k/47k as needed
+## Shift-register chain (per board)
 
-### Photointerrupter TCST2103 (verify pinout against datasheet)
-- Pin 1 LED anode: 270 ohm to 5V
-- Pin 2 LED cathode: GND
-- Pin 3 collector: pin 18 + 10k pull-up to 5V
-- Pin 4 emitter: GND
-- Beam broken = HIGH = onset detected
+- **U1 → U2:** U1's serial out (QH′) feeds U2's serial in (SER).
+- **Board → board:** U2's QH′ leaves on the DATA line of the outgoing ribbon and feeds U1 SER on the next board. CLOCK and LATCH are shared by every board.
+- **SRCLR** is tied to +5 V (never cleared). **OE** is tied to GND (outputs always enabled).
+- 12 of U1/U2's 16 outputs drive MOSFET gates. The other 4 are unused.
+- Both 74HC595s sit in DIP-16 sockets. Check the pin-1 notch when you insert them (see [the chain-failure write-up](power-debugging.md)).
 
-### Decoupling capacitors
-- 100uF electrolytic (35V+): across +24V/GND near MOSFET cluster
-- 470-1000uF electrolytic (35V+): across +24V/GND near PSU connection
-- 0.1uF ceramic: across Arduino 5V/GND near sensors
+Across 7 boards this forms one 112-bit shift chain. 84 of those bits are keys.
 
-## Full 13-key array pin assignments
-- PWM channels: pins 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 44
-- Interrupt pins: 18, 19
-- FSR inputs: A0, A1 (1-2 sensors moved between keys)
+## Solenoid channel (×12 per board)
+
+- **Gate:** 220 Ω series resistor from the 74HC595 output, and a 10 kΩ pull-down to GND that holds the MOSFET off while the logic is unpowered or floating.
+- **Drain:** one side of the solenoid (through its screw terminal) and the FR307 anode.
+- **Source:** GND.
+- **Solenoid:** the other side goes to +24 V.
+- **FR307 flyback diode:** cathode (stripe) at +24 V, anode at the drain. It clamps the inductive kick when the MOSFET turns off.
+- **IRLZ44N pinout** (TO-220, flat face toward you): Gate · Drain · Source, left to right.
+
+## Power
+
+- A single 24 V, 1500 W (62.5 A) switching supply feeds Board 1's J15. Each board's J16 feeds the next board's J15.
+- Each solenoid draws about 400 mA. Firmware caps simultaneous keys at 20, which is about 8 A on the bus.
+- Common ground: the 24 V supply ground, the board grounds, and the Arduino ground are all tied together.
+- On-board protection and bulk capacitance: SMBJ28A TVS diode (D1), 1000 µF (C2) and 10 µF (C1) electrolytic, and 0.1 µF ceramic (C3, C4). See the KiCad schematic for placement.
+
+---
+
+## Prototype (superseded)
+
+Before the octave boards, a single-key bench circuit drove one IRLZ44N directly from an Arduino PWM pin (100 Ω gate resistor, 10 kΩ pull-down). The flyback arrangement was the same as above. The bench also included an FSR 402 and a TCST2103 photointerrupter for planned force and timing measurements. These were not used in the final build, and no data was collected with them. The direct-drive approach needed one Arduino pin per key, which is why the design moved to the shift-register chain.
