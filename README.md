@@ -1,4 +1,4 @@
-# Robotic Piano Actuator
+# Modular Robotic Actuation System for Piano Key Control
 
 **A modular, clamp-on solenoid system that plays an acoustic piano from a MIDI score. Scaled from a one-octave prototype to a 7-octave (84-key) array of daisy-chained driver boards.**
 
