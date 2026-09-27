@@ -30,17 +30,7 @@ Self-playing pianos are purpose-built, expensive instruments. This project asks 
 
 ## System architecture
 
-```mermaid
-flowchart LR
-    A["MuseScore<br/>MIDI export"] --> B["musescore_player.py<br/>(laptop)"]
-    B -- "USB serial, 250 kbaud<br/>84-bit key-state frames" --> C["Arduino Mega 2560<br/>piano_driver.ino"]
-    C -- "SPI: DATA · CLOCK · LATCH" --> D1["Octave board 1<br/>2× 74HC595 → 12× IRLZ44N"]
-    D1 -- "signal ribbon +<br/>24 V bus" --> D2["Octave board 2"]
-    D2 --> D3["…"] --> D7["Octave board 7"]
-    D1 --> S["12 solenoids<br/>per board"]
-```
-
-The Arduino connects to the whole 84-key array through **five wires**: 5 V, GND, DATA (pin 51), CLOCK (pin 52), and LATCH (pin 8).
+The Arduino connects to the whole 84-key array through five wires: 5 V, GND, DATA (pin 51), CLOCK (pin 52), and LATCH (pin 8).
 
 ## Hardware
 
