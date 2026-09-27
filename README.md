@@ -5,9 +5,8 @@
 Northwestern University · Summer Undergraduate Research Grant (SURG) 2026
 Jordan Boymel · Advisor: Dr. Brenna Argall, Assistive & Rehabilitation Robotics Lab, Shirley Ryan AbilityLab
 
-<!-- MEDIA: put the best single photo here (the full array on the piano, or one octave board close-up).
-![Octave driver array mounted on piano](media/hero.jpg)
--->
+![Robot mounted on the piano](media/hero.jpg)
+
 
 > **Status (Sept 2026): hardware, firmware, and host software complete; full-scale tuning paused.**
 > The whole pipeline, from MIDI to solenoids, runs. The final demo used a lower-rated 24 V supply because the main supply couldn't be wired properly, and several actuators strike inconsistently. See [Current status and known issues](#current-status-and-known-issues).
