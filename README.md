@@ -5,7 +5,7 @@
 Northwestern University · Summer Undergraduate Research Grant (SURG) 2026
 Jordan Boymel · Advisor: Dr. Brenna Argall, Assistive & Rehabilitation Robotics Lab, Shirley Ryan AbilityLab
 
-<img src="media/hero.jpg" width="400" alt="Robot mounted on the piano">
+<img src="media/hero.jpg" width="600" alt="Robot mounted on the piano">
 
 
 > **Status (Sept 2026): hardware, firmware, and host software complete; full-scale tuning paused.**
